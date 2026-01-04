@@ -1,60 +1,59 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useStore } from './composables/useStore'
 
-const { kpiList, loading, loadList, addKpi } = useStore()
+// Store에서 상태 & 메서드 가져오기
+const {
+  kpiList,
+  loading,
+  selectedYear,
+  formKpiNm,
+  formWeight,
+  formDeleteId,
+  getList,
+  addKpi,
+  removeKpi
+} = useStore()
 
-// 검색 조건
-const selectedYear = ref('2024')
-
-// 폼 상태
-const newKpiNm = ref('')
-const newWeight = ref(0)
-
-// 조회
-const handleSearch = () => {
-  loadList(selectedYear.value)
-}
-
-// 저장
-const handleSave = async () => {
-  await addKpi(newKpiNm.value, newWeight.value, selectedYear.value)
-  newKpiNm.value = ''
-  newWeight.value = 0
-}
-
-onMounted(handleSearch)
+onMounted(getList)
 </script>
 
 <template>
   <div class="container">
     <h1>KPI 실습</h1>
 
-    <!-- 검색 조건 -->
+    <!-- 검색 -->
     <div class="search-box">
       <select v-model="selectedYear">
         <option value="2024">2024년</option>
         <option value="2023">2023년</option>
       </select>
-      <button @click="handleSearch">조회</button>
+      <button @click="getList">조회</button>
     </div>
 
     <!-- 목록 -->
-    <h2>목록 조회 (POST)</h2>
+    <h2>목록 (POST)</h2>
     <p v-if="loading">로딩중...</p>
     <ul v-else>
       <li v-for="kpi in kpiList" :key="kpi.kpiId">
-        {{ kpi.kpiNm }} - {{ kpi.weight }}% ({{ kpi.score }}점)
+        [{{ kpi.kpiId }}] {{ kpi.kpiNm }} - {{ kpi.weight }}% ({{ kpi.score }}점)
       </li>
       <li v-if="kpiList.length === 0">데이터 없음</li>
     </ul>
 
     <!-- 추가 -->
-    <h2>KPI 추가 (POST)</h2>
+    <h2>추가 (POST)</h2>
     <div class="form-row">
-      <input v-model="newKpiNm" placeholder="KPI명" />
-      <input v-model.number="newWeight" type="number" placeholder="가중치" />
-      <button @click="handleSave">저장</button>
+      <input v-model="formKpiNm" placeholder="KPI명" />
+      <input v-model.number="formWeight" type="number" placeholder="가중치" />
+      <button @click="addKpi">저장</button>
+    </div>
+
+    <!-- 삭제 -->
+    <h2>삭제 (POST)</h2>
+    <div class="form-row">
+      <input v-model="formDeleteId" placeholder="KPI ID (예: KPI001)" />
+      <button @click="removeKpi">삭제</button>
     </div>
   </div>
 </template>
