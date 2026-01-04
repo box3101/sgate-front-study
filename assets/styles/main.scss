@@ -35,12 +35,19 @@ li {
   color: #555;
 }
 
+.search-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
 .form-row {
   display: flex;
   gap: 8px;
   margin-top: 12px;
 }
 
+select,
 input {
   padding: 8px 12px;
   border: 1px solid #ddd;

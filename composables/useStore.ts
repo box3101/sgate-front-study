@@ -11,17 +11,17 @@ const { fetchKpiList, saveKpi } = useKpiApi()
 export const useStore = () => {
 
   // 조회
-  const loadList = async () => {
+  const loadList = async (year: string) => {
     loading.value = true
-    const result = await fetchKpiList('2024')
+    const result = await fetchKpiList(year)
     kpiList.value = result.data
     loading.value = false
   }
 
   // 저장
-  const addKpi = async (kpiNm: string, weight: number) => {
-    await saveKpi({ kpiNm, weight })
-    await loadList()
+  const addKpi = async (kpiNm: string, weight: number, year: string) => {
+    await saveKpi({ kpiNm, weight, year })
+    await loadList(year)
   }
 
   return {
