@@ -7,8 +7,6 @@ import { useKpiApi } from './useKpiApi'
 const kpiList = ref<any[]>([])
 const loading = ref(false)
 const selectedYear = ref('2024')
-
-// 폼 상태
 const formKpiNm = ref('')
 const formWeight = ref(0)
 const formDeleteId = ref('')
@@ -18,7 +16,24 @@ const formDeleteId = ref('')
 // ============================================
 const { fetchKpiList, saveKpi, deleteKpi } = useKpiApi()
 
-export const useStore = () => {
+// ============================================
+// 상태만 가져오기
+// ============================================
+export const useStoreState = () => {
+  return {
+    kpiList,
+    loading,
+    selectedYear,
+    formKpiNm,
+    formWeight,
+    formDeleteId
+  }
+}
+
+// ============================================
+// 메서드만 가져오기
+// ============================================
+export const useStoreActions = () => {
 
   // 조회
   const getList = async () => {
@@ -35,31 +50,19 @@ export const useStore = () => {
       weight: formWeight.value,
       year: selectedYear.value
     })
-    // 폼 초기화
     formKpiNm.value = ''
     formWeight.value = 0
-    // 목록 새로고침
     await getList()
   }
 
   // 삭제
   const removeKpi = async () => {
     await deleteKpi(formDeleteId.value)
-    // 폼 초기화
     formDeleteId.value = ''
-    // 목록 새로고침
     await getList()
   }
 
   return {
-    // 상태
-    kpiList,
-    loading,
-    selectedYear,
-    formKpiNm,
-    formWeight,
-    formDeleteId,
-    // 메서드
     getList,
     addKpi,
     removeKpi

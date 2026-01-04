@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useStore } from './composables/useStore'
+import { useStoreState, useStoreActions } from './composables/useStore'
 
-// Store에서 상태 & 메서드 가져오기
-const {
-  kpiList,
-  loading,
-  selectedYear,
-  formKpiNm,
-  formWeight,
-  formDeleteId,
-  getList,
-  addKpi,
-  removeKpi
-} = useStore()
+// 상태
+const { kpiList, loading, selectedYear, formKpiNm, formWeight, formDeleteId } = useStoreState()
+
+// 메서드
+const { getList, addKpi, removeKpi } = useStoreActions()
 
 onMounted(getList)
 </script>
