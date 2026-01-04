@@ -15,6 +15,26 @@ export const useKpiApi = () => {
     })
   }
 
+  // 부서 목록 조회 (GET 역할)
+ const fetchDeptList = () => {
+    return useApi('/api/dept/list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: ''
+    })
+ }
+  // 구성원 목록 조회 (GET 역할)
+  const fetchUserList = (selectedDept: string) => {
+    const params = new URLSearchParams()
+    params.append('selectedDept', selectedDept)
+
+    return useApi('/api/user/list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
   // 저장 (POST)
   const saveKpi = (data: { kpiNm: string; weight: number; year: string }) => {
     const params = new URLSearchParams()
@@ -41,5 +61,5 @@ export const useKpiApi = () => {
     })
   }
 
-  return { fetchKpiList, saveKpi, deleteKpi }
+  return { fetchKpiList, fetchDeptList, fetchUserList, saveKpi, deleteKpi }
 }

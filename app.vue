@@ -3,12 +3,14 @@ import { onMounted } from 'vue'
 import { useStoreState, useStoreActions } from './composables/useStore'
 
 // 상태
-const { kpiList, loading, selectedYear, formKpiNm, formWeight, formDeleteId } = useStoreState()
+const { kpiList, loading, selectedYear, selectedDept, selectedUser, formKpiNm, formWeight, formDeleteId, deptList, userList } = useStoreState()
 
 // 메서드
-const { getList, addKpi, removeKpi } = useStoreActions()
+const { getList, getDeptList, getUserList, addKpi, removeKpi } = useStoreActions()
 
 onMounted(getList)
+onMounted(getDeptList)
+onMounted(getUserList)
 </script>
 
 <template>
@@ -20,6 +22,16 @@ onMounted(getList)
       <select v-model="selectedYear">
         <option value="2024">2024년</option>
         <option value="2023">2023년</option>
+      </select>
+      <select v-model="selectedDept">
+        <option v-for="dept in deptList" :key="dept.deptId" :value="dept.deptId">
+          {{ dept.deptNm }}
+        </option>
+      </select>
+      <select v-model="selectedUser">
+        <option v-for="user in userList" :key="user.userId" :value="user.userId">
+          {{ user.userNm }}
+        </option>
       </select>
       <button @click="getList">조회</button>
     </div>
