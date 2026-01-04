@@ -9,6 +9,83 @@ body {
   background: #f9fafb;
 }
 
+// ============================================
+// 레이아웃 (사이드바 + 컨텐츠)
+// ============================================
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+  overflow-y: auto;
+
+  h3 {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+}
+
+.content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+// ============================================
+// 트리 스타일
+// ============================================
+.tree {
+  font-size: 14px;
+}
+
+.tree-node {
+  position: relative;
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+
+  &.active {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+}
+
+.tree-icon {
+  font-size: 14px;
+}
+
+.tree-name {
+  flex: 1;
+}
+
+.tree-position {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.tree-children {
+  padding-left: 20px;
+  border-left: 1px dashed #e5e7eb;
+  margin-left: 12px;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
