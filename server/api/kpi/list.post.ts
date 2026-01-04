@@ -9,11 +9,12 @@ export default defineEventHandler(async (event) => {
   // 2. 파라미터 파싱
   const params = new URLSearchParams(body)
   const findYear = params.get('findYear')
-
+  const userId = params.get('userId')
+  
   // 3. DB 조회 (findYear로 필터링)
-  const result = kpiList.filter(kpi => kpi.year === findYear)
+  const result = kpiList.filter(kpi => kpi.year === findYear && kpi.userId === userId)
 
-  console.log('[API] findYear:', findYear, '→', result.length, '건')
+  console.log('[API] findYear:', findYear, 'userId:', userId, '→', result.length, '건')
 
   // 4. 응답 반환
   return {

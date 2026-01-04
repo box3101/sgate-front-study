@@ -8,9 +8,12 @@ const { kpiList, loading, selectedYear, selectedDept, selectedUser, formKpiNm, f
 // 메서드
 const { getList, getDeptList, getUserList, addKpi, removeKpi } = useStoreActions()
 
-onMounted(getList)
-onMounted(getDeptList)
-onMounted(getUserList)
+async function init() {
+  await getDeptList()
+  await getUserList()
+  await getList()
+}
+onMounted(init)
 </script>
 
 <template>
@@ -23,12 +26,12 @@ onMounted(getUserList)
         <option value="2024">2024년</option>
         <option value="2023">2023년</option>
       </select>
-      <select v-model="selectedDept">
+      <select v-model="selectedDept" @change="getUserList">
         <option v-for="dept in deptList" :key="dept.deptId" :value="dept.deptId">
           {{ dept.deptNm }}
         </option>
       </select>
-      <select v-model="selectedUser">
+      <select v-model="selectedUser" @change="getList">
         <option v-for="user in userList" :key="user.userId" :value="user.userId">
           {{ user.userNm }}
         </option>

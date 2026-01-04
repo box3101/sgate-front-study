@@ -50,7 +50,7 @@ export const useStoreActions = () => {
   // 조회
   const getList = async () => {
     loading.value = true
-    const result = await fetchKpiList(selectedYear.value)
+    const result = await fetchKpiList(selectedYear.value, selectedUser.value)
     kpiList.value = result.data
     loading.value = false
   }

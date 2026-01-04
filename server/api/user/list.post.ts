@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   // 1. DB 조회 (구성원 목록 조회)
   const result = userList.filter(user => user.deptId === selectedDept)
 
-  console.log('[API] 구성원 목록 조회')
+  console.log('[API] 구성원 목록 조회' + selectedDept + '→' + result.length + '건')
 
   // 2. 응답 반환
   return {

@@ -4,9 +4,10 @@ import { useApi } from './useApi'
 export const useKpiApi = () => {
 
   // 조회 (GET 역할)
-  const fetchKpiList = (findYear: string) => {
+  const fetchKpiList = (findYear: string, userId: string) => {
     const params = new URLSearchParams()
     params.append('findYear', findYear)
+    params.append('userId', userId)
 
     return useApi('/api/kpi/list', {
       method: 'POST',
