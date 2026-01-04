@@ -8,12 +8,12 @@ export default defineEventHandler(async (event) => {
 
   // 2. 파라미터 파싱
   const params = new URLSearchParams(body)
-  const selectedDept = params.get('selectedDept')
+  const deptNm = params.get('deptNm')
 
   // 1. DB 조회 (구성원 목록 조회)
-  const result = userList.filter(user => user.deptId === selectedDept)
+  const result = userList.filter(user => user.deptNm === deptNm)
 
-  console.log('[API] 구성원 목록 조회' + selectedDept + '→' + result.length + '건')
+  console.log('[API] 구성원 목록 조회' + deptNm + '→' + result.length + '건')
 
   // 2. 응답 반환
   return {

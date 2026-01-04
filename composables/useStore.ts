@@ -60,7 +60,7 @@ export const useStoreActions = () => {
     loading.value = true
     const result = await fetchDeptList()
     deptList.value = result.data
-    selectedDept.value = deptList.value[0]?.deptId || ''
+    selectedDept.value = deptList.value[0]?.deptNm || ''
     loading.value = false
   }
 

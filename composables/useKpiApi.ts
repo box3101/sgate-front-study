@@ -25,9 +25,9 @@ export const useKpiApi = () => {
     })
  }
   // 구성원 목록 조회 (GET 역할)
-  const fetchUserList = (selectedDept: string) => {
+  const fetchUserList = (deptNm: string) => {
     const params = new URLSearchParams()
-    params.append('selectedDept', selectedDept)
+    params.append('deptNm', deptNm)
 
     return useApi('/api/user/list', {
       method: 'POST',
