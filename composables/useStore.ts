@@ -16,13 +16,14 @@ const deptList = ref<any[]>([])
 const selectedDept = ref('')
 
 // 구성원 목록
-const userList = ref<any[]>([])
+const allUserList = ref<any[]>([])  // 트리용 (전체)
+const userList = ref<any[]>([])      // 셀렉트용 (부서별)
 const selectedUser = ref('')
 
 // ============================================
 // API
 // ============================================
-const { fetchKpiList, fetchDeptList, fetchUserList, saveKpi, deleteKpi } = useKpiApi()
+const { fetchKpiList, fetchDeptList, fetchUserList, fetchAllUserList,   saveKpi, deleteKpi } = useKpiApi()
 
 // ============================================
 // 상태만 가져오기
@@ -37,6 +38,7 @@ export const useStoreState = () => {
     formDeleteId,
     deptList,
     selectedDept,
+    allUserList,
     userList,
     selectedUser,
   }
@@ -61,6 +63,15 @@ export const useStoreActions = () => {
     const result = await fetchDeptList()
     deptList.value = result.data
     selectedDept.value = deptList.value[0]?.deptNm || ''
+    loading.value = false
+  }
+
+  // 전체 구성원 목록 조회 (트리용)
+  const getAllUserList = async () => {
+    loading.value = true
+    const result = await fetchAllUserList()
+    allUserList.value = result.data
+    selectedUser.value = 'USER002'
     loading.value = false
   }
 
@@ -98,5 +109,6 @@ export const useStoreActions = () => {
     removeKpi,
     getDeptList,
     getUserList,
+    getAllUserList,
   }
 }

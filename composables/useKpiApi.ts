@@ -36,6 +36,15 @@ export const useKpiApi = () => {
     })
   }
 
+  // 전체 구성원 목록 조회 (GET 역할)
+  const fetchAllUserList = () => {
+    return useApi('/api/user/all', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: ''
+    })
+  }
+
   // 저장 (POST)
   const saveKpi = (data: { kpiNm: string; weight: number; year: string }) => {
     const params = new URLSearchParams()
@@ -62,5 +71,5 @@ export const useKpiApi = () => {
     })
   }
 
-  return { fetchKpiList, fetchDeptList, fetchUserList, saveKpi, deleteKpi }
+  return { fetchKpiList, fetchDeptList, fetchUserList, fetchAllUserList, saveKpi, deleteKpi }
 }
