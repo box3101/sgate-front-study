@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
   // 2. 파라미터 파싱
   const params = new URLSearchParams(body)
   const findYear = params.get('findYear')
+  console.log('findYear:', findYear) // findYear: 2024
 
   // 3. DB 조회 (findYear로 필터링)
   const result = kpiList.filter(kpi => kpi.year === findYear)
