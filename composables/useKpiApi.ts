@@ -30,16 +30,16 @@ export const useKpiApi = () => {
   }
 
   // 삭제 (POST)
-  const deleteKpi = (kpiId: string) => {
+  const deleteKpi = (data: { kpiId: string }) => {
     const params = new URLSearchParams()
-    params.append('kpiId', kpiId)
-
-    return useApi('/api/kpi/delete', {
-      method: 'POST',
+    params.append('kpiId', data.kpiId)
+    
+    return useApi("/api/kpi/delete", {
+      method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString()
-    })
-  }
+    });
+  };
 
-  return { fetchKpiList, saveKpi, deleteKpi }
-}
+  return { fetchKpiList, saveKpi, deleteKpi };
+};

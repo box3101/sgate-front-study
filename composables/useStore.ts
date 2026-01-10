@@ -57,7 +57,7 @@ export const useStoreActions = () => {
 
   // 삭제
   const removeKpi = async () => {
-    await deleteKpi(formDeleteId.value)
+    await deleteKpi({ kpiId: formDeleteId.value })
     formDeleteId.value = ''
     await getList()
   }
