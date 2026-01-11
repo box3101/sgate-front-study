@@ -10,15 +10,36 @@ const { getList, addKpi, removeKpi, updateKpiData } = useStoreActions()
 
 // 타이머 예시 (정리 안 함 - 나쁜 예시!)
 const count = ref(0)
+const scrollY = ref(0)
+const windowWidth = ref(window.innerWidth)
+
+// 이벤트 핸들러들
+const handleScroll = () => {
+  scrollY.value = window.scrollY
+  console.log('스크롤 이벤트 발생!', scrollY.value)
+}
+
+const handleResize = () => {
+  windowWidth.value = window.innerWidth
+  console.log('리사이즈 이벤트 발생!', windowWidth.value)
+}
 
 onMounted(() => {
   getList()
 
-  // 1초마다 카운트 증가 (정리 안 함!)
+  // 1. 타이머 (정리 안 함!)
   setInterval(() => {
     count.value++
-    console.log('타이머 실행 중...', count.value)
+    console.log('1. 타이머 실행 중...', count.value)
   }, 1000)
+
+  // 2. 스크롤 이벤트 (정리 안 함!)
+  window.addEventListener('scroll', handleScroll)
+  console.log('2. 스크롤 이벤트 등록됨')
+
+  // 3. 리사이즈 이벤트 (정리 안 함!)
+  window.addEventListener('resize', handleResize)
+  console.log('3. 리사이즈 이벤트 등록됨')
 })
 </script>
 
@@ -26,8 +47,13 @@ onMounted(() => {
   <div class="container">
     <h1>KPI 실습 (메인 페이지)</h1>
 
-    <!-- 타이머 테스트 (정리 안 함!) -->
-    <p>카운트: {{ count }} (콘솔 확인!)</p>
+    <!-- 정리 안 함 테스트! -->
+    <div style="background: #ffe0e0; padding: 10px; margin-bottom: 20px;">
+      <p>1. 타이머: {{ count }}초</p>
+      <p>2. 스크롤 위치: {{ scrollY }}px</p>
+      <p>3. 창 너비: {{ windowWidth }}px</p>
+      <p style="color: red;">콘솔(F12) 확인하세요!</p>
+    </div>
 
     <!-- 테스트 페이지 이동 -->
     <NuxtLink to="/test">테스트 페이지로 이동</NuxtLink>
