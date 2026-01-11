@@ -33,7 +33,7 @@ export const useKpiApi = () => {
   const deleteKpi = (data: { kpiId: string }) => {
     const params = new URLSearchParams()
     params.append('kpiId', data.kpiId)
-    
+
     return useApi("/api/kpi/delete", {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -41,5 +41,20 @@ export const useKpiApi = () => {
     });
   };
 
-  return { fetchKpiList, saveKpi, deleteKpi };
+  // 수정 (POST)
+  const updateKpi = (data: { kpiId: string, kpiNm: string, weight: number, score: number }) => {
+    const params = new URLSearchParams()
+    params.append('kpiId', data.kpiId)
+    params.append('kpiNm', data.kpiNm)
+    params.append('weight', String(data.weight))
+    params.append('score', String(data.score))
+
+    return useApi("/api/kpi/update", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+  };
+
+  return { fetchKpiList, saveKpi, deleteKpi, updateKpi };
 };

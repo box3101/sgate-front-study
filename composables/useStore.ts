@@ -9,12 +9,23 @@ const loading = ref(false)
 const selectedYear = ref('2024')
 const formKpiNm = ref('')
 const formWeight = ref(0)
+
+// 삭제
 const formDeleteId = ref('')
+
+// 수정
+const formUpdateId = ref('')
+const formUpdateNm = ref('')
+const formUpdateWeight = ref(0)
+const formUpdateScore = ref(0)
+
+// 상태추가
+const selectedKpi = ref<any>(null)
 
 // ============================================
 // API
 // ============================================
-const { fetchKpiList, saveKpi, deleteKpi } = useKpiApi()
+const { fetchKpiList, saveKpi, deleteKpi, updateKpi } = useKpiApi()
 
 // ============================================
 // 상태만 가져오기
@@ -26,7 +37,12 @@ export const useStoreState = () => {
     selectedYear,
     formKpiNm,
     formWeight,
-    formDeleteId
+    formDeleteId,
+    formUpdateId,
+    formUpdateNm,
+    formUpdateWeight,
+    formUpdateScore,
+    selectedKpi
   }
 }
 
@@ -62,9 +78,21 @@ export const useStoreActions = () => {
     await getList()
   }
 
+  // 수정
+  const updateKpiData = async () => {
+    await updateKpi({ kpiId: formUpdateId.value, kpiNm: formUpdateNm.value, weight: formUpdateWeight.value, score: formUpdateScore.value })
+    formUpdateId.value = ''
+    formUpdateNm.value = ''
+    formUpdateWeight.value = 0
+    formUpdateScore.value = 0
+    await getList()
+  }
+
+
   return {
     getList,
     addKpi,
-    removeKpi
+    removeKpi,
+    updateKpiData
   }
 }
