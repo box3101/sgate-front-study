@@ -1,62 +1,29 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useStoreState, useStoreActions } from '~/composables/useStore'
 
-// 상태
-const { kpiList, loading, selectedYear, formKpiNm, formWeight, formDeleteId, formUpdateId, formUpdateNm, formUpdateWeight, formUpdateScore, selectedKpi } = useStoreState()
+// 상태 + Mock 데이터
+const {
+  years,        // 연도 목록
+  departments,  // 부서 목록
+  kpiList,
+  loading,
+  selectedYear,
+  selectedDept,  // 선택된 부서
+  selectedKpi
+} = useStoreState()
 
 // 메서드
-const { getList, addKpi, removeKpi, updateKpiData } = useStoreActions()
-
-// 타이머 예시 (정리 안 함 - 나쁜 예시!)
-const count = ref(0)
-const scrollY = ref(0)
-const windowWidth = ref(window.innerWidth)
-
-// 이벤트 핸들러들
-const handleScroll = () => {
-  scrollY.value = window.scrollY
-  console.log('스크롤 이벤트 발생!', scrollY.value)
-}
-
-const handleResize = () => {
-  windowWidth.value = window.innerWidth
-  console.log('리사이즈 이벤트 발생!', windowWidth.value)
-}
+const { getList } = useStoreActions()
 
 onMounted(() => {
   getList()
-
-  // 1. 타이머 (정리 안 함!)
-  setInterval(() => {
-    count.value++
-    console.log('1. 타이머 실행 중...', count.value)
-  }, 1000)
-
-  // 2. 스크롤 이벤트 (정리 안 함!)
-  window.addEventListener('scroll', handleScroll)
-  console.log('2. 스크롤 이벤트 등록됨')
-
-  // 3. 리사이즈 이벤트 (정리 안 함!)
-  window.addEventListener('resize', handleResize)
-  console.log('3. 리사이즈 이벤트 등록됨')
 })
 </script>
 
 <template>
   <div class="container">
     <h1>KPI 실습 (메인 페이지)</h1>
-
-    <!-- 정리 안 함 테스트! -->
-    <div style="background: #ffe0e0; padding: 10px; margin-bottom: 20px;">
-      <p>1. 타이머: {{ count }}초</p>
-      <p>2. 스크롤 위치: {{ scrollY }}px</p>
-      <p>3. 창 너비: {{ windowWidth }}px</p>
-      <p style="color: red;">콘솔(F12) 확인하세요!</p>
-    </div>
-
-    <!-- 테스트 페이지 이동 -->
-    <NuxtLink to="/test">테스트 페이지로 이동</NuxtLink>
 
     <!-- 검색 -->
     <div class="search-box">
@@ -81,31 +48,6 @@ onMounted(() => {
     </div>
     <div v-else>
       <p>선택된 데이터 없음</p>
-    </div>
-
-    <!-- 추가 -->
-    <h2>추가 (POST)</h2>
-    <div class="form-row">
-      <input v-model="formKpiNm" placeholder="KPI명" />
-      <input v-model.number="formWeight" type="number" placeholder="가중치" />
-      <button @click="addKpi">저장</button>
-    </div>
-
-    <!-- 삭제 -->
-    <h2>삭제 (POST)</h2>
-    <div class="form-row">
-      <input v-model="formDeleteId" placeholder="KPI ID (예: KPI001)" />
-      <button @click="removeKpi">삭제</button>
-    </div>
-
-    <!-- 수정 -->
-    <h2>수정 (POST)</h2>
-    <div class="form-row">
-      <input v-model="formUpdateId" placeholder="KPI ID" />
-      <input v-model="formUpdateNm" placeholder="KPI명" />
-      <input v-model="formUpdateWeight" type="number" placeholder="가중치" />
-      <input v-model="formUpdateScore" type="number" placeholder="점수" />
-      <button @click="updateKpiData">수정</button>
     </div>
   </div>
 </template>

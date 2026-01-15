@@ -15,46 +15,5 @@ export const useKpiApi = () => {
     })
   }
 
-  // 저장 (POST)
-  const saveKpi = (data: { kpiNm: string; weight: number; year: string }) => {
-    const params = new URLSearchParams()
-    params.append('kpiNm', data.kpiNm)
-    params.append('weight', String(data.weight))
-    params.append('year', data.year)
-
-    return useApi('/api/kpi/save', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    })
-  }
-
-  // 삭제 (POST)
-  const deleteKpi = (data: { kpiId: string }) => {
-    const params = new URLSearchParams()
-    params.append('kpiId', data.kpiId)
-
-    return useApi("/api/kpi/delete", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    });
-  };
-
-  // 수정 (POST)
-  const updateKpi = (data: { kpiId: string, kpiNm: string, weight: number, score: number }) => {
-    const params = new URLSearchParams()
-    params.append('kpiId', data.kpiId)
-    params.append('kpiNm', data.kpiNm)
-    params.append('weight', String(data.weight))
-    params.append('score', String(data.score))
-
-    return useApi("/api/kpi/update", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    });
-  };
-
-  return { fetchKpiList, saveKpi, deleteKpi, updateKpi };
+  return { fetchKpiList };
 };
