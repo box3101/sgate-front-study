@@ -2,14 +2,9 @@
 import { ref, onMounted } from 'vue'
 import { useStore } from './composables/useStore'
 
-const { kpiList, loading, loadList, addKpi } = useStore()
+const { kpiList, loading, selectedYear, newKpiNm, newWeight , deleteKpiId } = useStore()
 
-// 검색 조건
-const selectedYear = ref('2024')
-
-// 폼 상태
-const newKpiNm = ref('')
-const newWeight = ref(0)
+const { loadList, addKpi, deleteKpi } = useStoreAction()
 
 // 조회
 const handleSearch = () => {
@@ -17,13 +12,21 @@ const handleSearch = () => {
 }
 
 // 저장
-const handleSave = async () => {
-  await addKpi(newKpiNm.value, newWeight.value, selectedYear.value)
+const handleSave = () => {
+  addKpi(newKpiNm.value, newWeight.value, selectedYear.value)
   newKpiNm.value = ''
   newWeight.value = 0
 }
 
-onMounted(handleSearch)
+// 삭제
+const handleDelete = () => {
+  deleteKpi(deleteKpiId.value)
+}
+
+onMounted(() => {
+  loadList(selectedYear.value)
+})
+
 </script>
 
 <template>
@@ -55,6 +58,13 @@ onMounted(handleSearch)
       <input v-model="newKpiNm" placeholder="KPI명" />
       <input v-model.number="newWeight" type="number" placeholder="가중치" />
       <button @click="handleSave">저장</button>
+    </div>
+
+    <!-- 삭제 -->
+    <h2>KPI 삭제 (DELETE)</h2>
+    <div class="form-row">
+      <input v-model="deleteKpiId" placeholder="KPI ID" />
+      <button @click="handleDelete">삭제</button>
     </div>
   </div>
 </template>

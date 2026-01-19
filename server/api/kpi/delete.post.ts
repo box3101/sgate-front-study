@@ -1,16 +1,26 @@
+// ============================================
+// 5단계: 서버 API (server/api/kpi/delete.ts)
+// ============================================
 import { kpiList } from '~/server/data'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+
+  // 1. 프론트에서 보낸 데이터 받기
+  const body = await readBody(event)  // "kpiId=KPI001"
+
+  // 2. 문자열을 파싱해서 값 추출
   const params = new URLSearchParams(body)
-  const kpiId = params.get('kpiId')  // 1. 뭘 받아야 할까?
+  const kpiId = params.get('kpiId')  // "KPI001"
 
-  // 2. kpiList에서 해당 kpiId 제외하고 필터링
-  // 힌트: kpiList = kpiList.filter(???)
-  const result = kpiList.filter(kpi => kpi.kpiId !== kpiId)
+  // 3. 배열에서 해당 항목 찾기
+  const index = kpiList.findIndex(item => item.kpiId === kpiId)
 
-  return {
-    resultCode: 'SUCCESS',  // 3. 성공 코드
-    resultMsg: '삭제완료'    // 4. 메시지
+  // 4. 찾으면 삭제
+  if (index !== -1) {
+    kpiList.splice(index, 1)  // 배열에서 제거
+    return { resultCode: 'SUCCESS', resultMsg: '삭제완료' }
   }
+
+  // 5. 못 찾으면 실패
+  return { resultCode: 'FAIL', resultMsg: '해당 KPI 없음' }
 })

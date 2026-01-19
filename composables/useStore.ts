@@ -1,16 +1,41 @@
 import { ref } from 'vue'
 import { useKpiApi } from './useKpiApi'
 
-// 상태
+// ============================================
+// State
+// ============================================
 const kpiList = ref<any[]>([])
 const loading = ref(false)
+const selectedYear = ref('2024')
+const newKpiNm = ref('')
+const newWeight = ref(0)
 
+// 삭제
+const deleteKpiId = ref('')
+
+// ============================================
 // API
-const { fetchKpiList, saveKpi } = useKpiApi()
+// ============================================
+const { fetchKpiList, saveKpi, deleteKpiApi } = useKpiApi()
 
+// ============================================
+// Export - State
+// ============================================
 export const useStore = () => {
+  return {
+    kpiList,
+    loading,
+    selectedYear,
+    newKpiNm,
+    newWeight,
+    deleteKpiId,
+  }
+}
 
-  // 조회
+// ============================================
+// Export - Actions
+// ============================================
+export const useStoreAction = () => {
   const loadList = async (year: string) => {
     loading.value = true
     const result = await fetchKpiList(year)
@@ -18,16 +43,19 @@ export const useStore = () => {
     loading.value = false
   }
 
-  // 저장
   const addKpi = async (kpiNm: string, weight: number, year: string) => {
     await saveKpi({ kpiNm, weight, year })
     await loadList(year)
   }
 
+  const deleteKpi = async (kpiId: string) => {
+    await deleteKpiApi(kpiId)
+    await loadList(selectedYear.value)
+  }
+
   return {
-    kpiList,
-    loading,
     loadList,
-    addKpi
+    addKpi,
+    deleteKpi
   }
 }
