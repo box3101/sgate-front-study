@@ -38,7 +38,7 @@ export const useStore = () => {
 export const useStoreAction = () => {
   const loadList = async (year: string) => {
     loading.value = true
-    const result = await fetchKpiList(year)
+    const result = await fetchKpiList(selectedYear.value)
     kpiList.value = result.data
     loading.value = false
   }

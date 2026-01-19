@@ -3,7 +3,7 @@ import { useApi } from './useApi'
 
 export const useKpiApi = () => {
 
-  // 조회
+  // 조회 (GET 역할)
   const fetchKpiList = (findYear: string) => {
     const params = new URLSearchParams()
     params.append('findYear', findYear)
@@ -15,7 +15,7 @@ export const useKpiApi = () => {
     })
   }
 
-  // 저장
+  // 저장 (POST)
   const saveKpi = (data: { kpiNm: string; weight: number; year: string }) => {
     const params = new URLSearchParams()
     params.append('kpiNm', data.kpiNm)
