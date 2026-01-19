@@ -98,7 +98,11 @@ onMounted(() => {
           </option>
         </select>
 
-        <button @click="getList">조회</button>
+        <button @click="getList">
+            <span class="icon-menu size-24 icon-white"></span>  
+           <span class="icon-search size-24 icon-white"></span>
+        <span class="icon-menu size-16"></span> 
+    조회</button>
       </div>
 
       <!-- 팀원 안내 메시지 -->
