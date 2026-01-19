@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useStore } from './composables/useStore'
+import { useStoreState } from './composables/useStore'
+import { useStoreActions } from './composables/useStore'
 
-const { kpiList, loading, selectedYear, newKpiNm, newWeight , deleteKpiId } = useStore()
+const { kpiList, loading, selectedYear, newKpiNm, newWeight , deleteKpiId } = useStoreState()
 
-const { loadList, addKpi, deleteKpi } = useStoreAction()
+const { loadList, addKpi, deleteKpi } = useStoreActions()
 
 // 조회
 const handleSearch = () => {

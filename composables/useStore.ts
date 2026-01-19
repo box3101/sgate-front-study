@@ -21,7 +21,7 @@ const { fetchKpiList, saveKpi, deleteKpiApi } = useKpiApi()
 // ============================================
 // Export - State
 // ============================================
-export const useStore = () => {
+export const useStoreState = () => {
   return {
     kpiList,
     loading,
@@ -35,7 +35,7 @@ export const useStore = () => {
 // ============================================
 // Export - Actions
 // ============================================
-export const useStoreAction = () => {
+export const useStoreActions = () => {
   const loadList = async (year: string) => {
     loading.value = true
     const result = await fetchKpiList(selectedYear.value)
