@@ -32,7 +32,7 @@ export const useKpiApi = () => {
   // 삭제
   const deleteKpiApi = (kpiId: string) => {
     const params = new URLSearchParams()
-    params.append('kpiId', kpiId)
+    //TODO: 파라미터 작성 (kpiId)
 
     return useApi('/api/kpi/delete', {
       method: 'POST',

@@ -3,9 +3,9 @@ import { ref, onMounted } from 'vue'
 import { useStoreState } from './composables/useStore'
 import { useStoreActions } from './composables/useStore'
 
-const { kpiList, loading, selectedYear, newKpiNm, newWeight , deleteKpiId } = useStoreState()
+const { kpiList, loading, selectedYear, newKpiNm, newWeight  } = useStoreState()
 
-const { loadList, addKpi, deleteKpi } = useStoreActions()
+const { loadList, addKpi } = useStoreActions()
 
 // 조회
 const handleSearch = () => {
@@ -21,7 +21,7 @@ const handleSave = () => {
 
 // 삭제
 const handleDelete = () => {
-  deleteKpi(deleteKpiId.value)
+  // 2. TODO: 작성
 }
 
 onMounted(() => {
@@ -64,7 +64,8 @@ onMounted(() => {
     <!-- 삭제 -->
     <h2>KPI 삭제 (DELETE)</h2>
     <div class="form-row">
-      <input v-model="deleteKpiId" placeholder="KPI ID" />
+        <!-- 1.TODO: v-model 작성 -->
+      <input placeholder="KPI ID" />
       <button @click="handleDelete">삭제</button>
     </div>
   </div>

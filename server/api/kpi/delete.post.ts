@@ -10,14 +10,14 @@ export default defineEventHandler(async (event) => {
 
   // 2. 문자열을 파싱해서 값 추출
   const params = new URLSearchParams(body)
-  const kpiId = params.get('kpiId')  // "KPI001"
+  //TODO: 파라미터 파싱 (kpiId) 추출 "KPI001"
 
   // 3. 배열에서 해당 항목 찾기
   const index = kpiList.findIndex(item => item.kpiId === kpiId)
 
   // 4. 찾으면 삭제
   if (index !== -1) {
-    kpiList.splice(index, 1)  // 배열에서 제거
+    //  TODO: slice 메서드 사용해서 제거
     return { resultCode: 'SUCCESS', resultMsg: '삭제완료' }
   }
 

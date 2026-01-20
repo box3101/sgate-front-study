@@ -11,7 +11,7 @@ const newKpiNm = ref('')
 const newWeight = ref(0)
 
 // 삭제
-const deleteKpiId = ref('')
+// TODO:삭제할 변수 작성
 
 // ============================================
 // API
@@ -28,7 +28,6 @@ export const useStoreState = () => {
     selectedYear,
     newKpiNm,
     newWeight,
-    deleteKpiId,
   }
 }
 
@@ -48,8 +47,9 @@ export const useStoreActions = () => {
     await loadList(year)
   }
 
+  // 삭제
   const deleteKpi = async (kpiId: string) => {
-    await deleteKpiApi(kpiId)
+    //TODO: 삭제 API 호출 함수 작성
     await loadList(selectedYear.value)
   }
 
