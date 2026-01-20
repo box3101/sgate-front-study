@@ -6,3 +6,10 @@ export const kpiList = [
   { kpiId: 'KPI004', kpiNm: '고객 만족도', weight: 50, score: 75, year: '2023' },
   { kpiId: 'KPI005', kpiNm: '매출 목표', weight: 50, score: 80, year: '2023' },
 ]
+
+/*
+ KPI002
+ const index = 1
+ [배열].splice(시작값, 삭제개수)
+ kipList.splice(1 , 1)
+*/
