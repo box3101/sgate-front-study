@@ -6,7 +6,10 @@ const kpiList = ref<any[]>([])
 const loading = ref(false)
 
 // API
-const { fetchKpiList, saveKpi } = useKpiApi()
+const { fetchKpiList, saveKpi, deleteKpi: deleteKpiApi } = useKpiApi()
+
+// 선택된 항목
+const selectedIds = ref<string[]>([])
 
 export const useStore = () => {
 
@@ -24,10 +27,32 @@ export const useStore = () => {
     await loadList(year)
   }
 
+  // 선택 토글
+  const toggleSelect = (kpiId: string) => {
+    const idx = selectedIds.value.indexOf(kpiId)
+    if (idx === -1) {
+      selectedIds.value.push(kpiId)
+    } else {
+      selectedIds.value.splice(idx, 1)
+    }
+  }
+
+  // 삭제
+  const deleteSelected = async (year: string) => {
+    for (const kpiId of selectedIds.value) {
+      await deleteKpiApi(kpiId)
+    }
+    selectedIds.value = []
+    await loadList(year)
+  }
+
   return {
     kpiList,
     loading,
+    selectedIds,
     loadList,
-    addKpi
+    addKpi,
+    toggleSelect,
+    deleteSelected
   }
 }

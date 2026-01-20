@@ -29,5 +29,17 @@ export const useKpiApi = () => {
     })
   }
 
-  return { fetchKpiList, saveKpi }
+  // 삭제
+  const deleteKpi = (kpiId: string) => {
+    const params = new URLSearchParams()
+    params.append('kpiId', kpiId)
+
+    return useApi('/api/kpi/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
+  return { fetchKpiList, saveKpi, deleteKpi }
 }
