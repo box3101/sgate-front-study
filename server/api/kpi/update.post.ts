@@ -26,6 +26,6 @@ export default defineEventHandler(async (event) => {
   return {
     resultCode: 'SUCCESS',
     resultMsg: '수정 완료',
-    data: kpiList
+    data: kpiList // 수정된 전체 목록
   }
 });
