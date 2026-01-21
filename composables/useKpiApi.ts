@@ -33,6 +33,7 @@ export const useKpiApi = () => {
   const deleteKpiApi = (kpiId: string) => {
     const params = new URLSearchParams()
     //TODO: 파라미터 작성 (kpiId)
+    params.append('kpiId', kpiId)
 
     return useApi('/api/kpi/delete', {
       method: 'POST',
@@ -41,5 +42,24 @@ export const useKpiApi = () => {
     })
   }
 
-  return { fetchKpiList, saveKpi, deleteKpiApi }
+  // 수정
+  const updateKpiApi = (data: { kpiId: string; kpiNm: string; weight: number; score: number }) => {
+    // 1. 빈 상자 만들기
+    const params = new URLSearchParams()
+
+    // 2. 물건 넣기
+    params.append('kpiId', data.kpiId)
+    params.append('kpiNm', data.kpiNm)
+    params.append('weight', String(data.weight))  // 숫자는 String()으로 변환
+    params.append('score', String(data.score))
+
+    // 3. 포장해서 보내기
+    return useApi('/api/kpi/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()  // "kpiId=KPI001&kpiNm=...&weight=30&score=85"
+    })
+  }
+
+  return { fetchKpiList, saveKpi, deleteKpiApi, updateKpiApi }
 }
