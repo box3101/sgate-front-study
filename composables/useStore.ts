@@ -55,8 +55,8 @@ export const useStoreActions = () => {
     loading.value = false
   }
 
-  const addKpi = async (kpiNm: string, weight: number, year: string) => {
-    await saveKpi({ kpiNm, weight, year })
+  const addKpi = async (kpiNm: string, weight: number, year: string, targetValue?: number, unit?: string) => {
+    await saveKpi({ kpiNm, weight, year, targetValue, unit })
     await loadList(year)
   }
 

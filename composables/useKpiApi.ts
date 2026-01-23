@@ -16,11 +16,17 @@ export const useKpiApi = () => {
   }
 
   // 저장 (POST)
-  const saveKpi = (data: { kpiNm: string; weight: number; year: string }) => {
+  const saveKpi = (data: { kpiNm: string; weight: number; year: string; targetValue?: number; unit?: string }) => {
     const params = new URLSearchParams()
     params.append('kpiNm', data.kpiNm)
     params.append('weight', String(data.weight))
     params.append('year', data.year)
+    if (data.targetValue !== undefined) {
+      params.append('targetValue', String(data.targetValue))
+    }
+    if (data.unit) {
+      params.append('unit', data.unit)
+    }
 
     return useApi('/api/kpi/save', {
       method: 'POST',
