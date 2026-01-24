@@ -16,7 +16,7 @@ export const useKpiApi = () => {
   }
 
   // 저장 (POST)
-  const saveKpi = (data: { kpiNm: string; weight: number; year: string; targetValue?: number; unit?: string }) => {
+  const fetchSaveKpi = (data: { kpiNm: string; weight: number; year: string; targetValue?: number; unit?: string }) => {
     const params = new URLSearchParams()
     params.append('kpiNm', data.kpiNm)
     params.append('weight', String(data.weight))
@@ -36,7 +36,7 @@ export const useKpiApi = () => {
   }
 
   // 삭제
-  const deleteKpiApi = (kpiId: string) => {
+  const fetchDeleteKpi = (kpiId: string) => {
     const params = new URLSearchParams()
     //TODO: 파라미터 작성 (kpiId)
     params.append('kpiId', kpiId)
@@ -49,7 +49,7 @@ export const useKpiApi = () => {
   }
 
   // 수정
-  const updateKpiApi = (data: { kpiId: string; kpiNm: string; weight: number; score: number }) => {
+  const fetchUpdateKpi = (data: { kpiId: string; kpiNm: string; weight: number; score: number }) => {
     // 1. 빈 상자 만들기
     const params = new URLSearchParams()
 
@@ -67,5 +67,78 @@ export const useKpiApi = () => {
     })
   }
 
-  return { fetchKpiList, saveKpi, deleteKpiApi, updateKpiApi }
+  // ============================================
+  // Objective API
+  // ============================================
+
+  // Objective 목록 조회 (kpiId 선택)
+  const fetchObjList = (kpiId?: string) => {
+    const params = new URLSearchParams()
+    if (kpiId) {
+      params.append('kpiId', kpiId)
+    }
+
+    return useApi('/api/okr/obj-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
+  // Objective 저장
+  const fetchSaveObj = (data: { kpiId?: string; objNm: string }) => {
+    const params = new URLSearchParams()
+    if (data.kpiId) {
+      params.append('kpiId', data.kpiId)
+    }
+    params.append('objNm', data.objNm)
+
+    return useApi('/api/okr/obj-save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
+  // ============================================
+  // Key Result API
+  // ============================================
+
+  // Key Result 목록 조회 (objId 선택)
+  const fetchKrList = (objId?: string) => {
+    const params = new URLSearchParams()
+    if (objId) {
+      params.append('objId', objId)
+    }
+
+    return useApi('/api/okr/kr-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
+  // Key Result 저장
+  const fetchSaveKr = (data: { objId: string; krNm: string; targetValue: number; actualValue: number }) => {
+    const params = new URLSearchParams()
+    params.append('objId', data.objId)
+    params.append('krNm', data.krNm)
+    params.append('targetValue', String(data.targetValue))
+    params.append('actualValue', String(data.actualValue))
+
+    return useApi('/api/okr/kr-save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
+  return {
+    // KPI
+    fetchKpiList, fetchSaveKpi, fetchDeleteKpi, fetchUpdateKpi,
+    // Objective
+    fetchObjList, fetchSaveObj,
+    // Key Result
+    fetchKrList, fetchSaveKr
+  }
 }
