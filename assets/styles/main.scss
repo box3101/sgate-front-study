@@ -73,3 +73,77 @@ button {
     background: #2563eb;
   }
 }
+
+// KPI 목록 - 클릭 가능 스타일
+.kpi-list {
+  li {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+
+    &.active {
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-weight: 500;
+    }
+  }
+}
+
+// OKR Key Result 상세 섹션
+.detail-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  h3 {
+    margin: 0 0 16px;
+    font-size: 18px;
+    color: #111;
+  }
+
+  .close-btn {
+    margin-bottom: 16px;
+    padding: 6px 12px;
+    background: #6b7280;
+    font-size: 12px;
+
+    &:hover {
+      background: #4b5563;
+    }
+  }
+}
+
+// Key Result 테이블
+.kr-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+    font-size: 13px;
+  }
+
+  td {
+    color: #555;
+    font-size: 14px;
+  }
+
+  tbody tr:hover {
+    background: #f9fafb;
+  }
+}

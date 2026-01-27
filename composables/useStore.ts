@@ -20,10 +20,14 @@ const editKpiNm = ref('')     // 수정할 이름
 const editWeight = ref(0)     // 수정할 가중치
 const editScore = ref(0)      // 수정할 점수
 
+// KPI 상세 조회용 상태 변수
+const selectedKpi = ref<any>(null)           // 선택된 KPI 정보
+const okrKeyResultList = ref<any[]>([])      // 연계된 OKR Key Result 목록
+
 // ============================================
 // API
 // ============================================
-const { fetchKpiList, saveKpi, deleteKpiApi, updateKpiApi } = useKpiApi()
+const { fetchKpiList, saveKpi, deleteKpiApi, updateKpiApi, fetchKpiDetail } = useKpiApi()
 
 // ============================================
 // Export - State
@@ -41,6 +45,9 @@ export const useStoreState = () => {
     editWeight,
     editScore,
     deleteKpiId,
+    // KPI 상세 조회용
+    selectedKpi,
+    okrKeyResultList,
   }
 }
 
@@ -86,10 +93,28 @@ export const useStoreActions = () => {
     editScore.value = 0
   }
 
+  // KPI 상세 조회 (연계 OKR Key Result 포함)
+  const selectKpi = async (kpiId: string) => {
+    const result = await fetchKpiDetail(kpiId)
+
+    if (result.resultCode === 'SUCCESS') {
+      selectedKpi.value = result.data.kpi
+      okrKeyResultList.value = result.data.keyResults
+    }
+  }
+
+  // 선택 해제 (초기화)
+  const clearSelection = () => {
+    selectedKpi.value = null
+    okrKeyResultList.value = []
+  }
+
   return {
     loadList,
     addKpi,
     deleteKpi,
-    updateKpiAction
+    updateKpiAction,
+    selectKpi,
+    clearSelection,
   }
 }

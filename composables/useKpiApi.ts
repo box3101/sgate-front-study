@@ -61,5 +61,17 @@ export const useKpiApi = () => {
     })
   }
 
-  return { fetchKpiList, saveKpi, deleteKpiApi, updateKpiApi }
+  // KPI 상세 조회 (연계 OKR Key Result 포함)
+  const fetchKpiDetail = (kpiId: string) => {
+    const params = new URLSearchParams()
+    params.append('kpiId', kpiId)
+
+    return useApi('/api/kpi/detail', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+  }
+
+  return { fetchKpiList, saveKpi, deleteKpiApi, updateKpiApi, fetchKpiDetail }
 }
